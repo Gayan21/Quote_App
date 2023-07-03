@@ -31,12 +31,17 @@ class _QuotesListScreenState extends State<QuotesListScreen> {
   }
 
   Future<List<Quote>> fetchQuotes() async {
-    final response = await http.get(Uri.parse('https://dummyjson.com/quotes'));
-    if (response.statusCode == 200) {
-      final List<dynamic> quoteData = jsonDecode(response.body);
-      final List<Quote> quotesList = quoteData.map((quoteJson) => Quote.fromJson(quoteJson)).toList();
-      return quotesList;
-    } else {
+    try {
+      final response = await http.get(Uri.parse('https://dummyjson.com/quotes'));
+      if (response.statusCode == 200) {
+        final responseData = jsonDecode(response.body);
+        final List<dynamic> quoteData = responseData['quotes'];
+        final List<Quote> quotesList = quoteData.map((quoteJson) => Quote.fromJson(quoteJson)).toList();
+        return quotesList;
+      }
+      throw Exception('Failed to fetch quotes');
+    } catch (error) {
+      print('Error: $error');
       throw Exception('Failed to fetch quotes');
     }
   }
@@ -89,5 +94,4 @@ class _QuotesListScreenState extends State<QuotesListScreen> {
   }
 }
 
-  
 

@@ -28,21 +28,21 @@ class _QuoteAppState extends State<QuoteApp> {
   @override
   void initState() {
     super.initState();
-    quote = fetchQuote();
+    // quote = fetchQuote();
   }
 
-  Future<Quote> fetchQuote() async {
-    final response =
-        await http.get(Uri.parse('http://quotes.rest/qod.json'));
-    if (response.statusCode == 200) {
-      final json = jsonDecode(response.body);
-      final quoteContent = json['contents']['quotes'][0]['quote'];
-      final quoteAuthor = json['contents']['quotes'][0]['author'];
-      return Quote(content: quoteContent, author: quoteAuthor);
-    } else {
-      throw Exception('Failed to fetch quote');
-    }
-  }
+  // Future<Quote> fetchQuote() async {
+  //   final response =
+  //       await http.get(Uri.parse('http://quotes.rest/qod.json'));
+  //   if (response.statusCode == 200) {
+  //     final json = jsonDecode(response.body);
+  //     final quoteContent = json['contents']['quotes'][0]['quote'];
+  //     final quoteAuthor = json['contents']['quotes'][0]['author'];
+  //     return Quote(content: quoteContent, author: quoteAuthor);
+  //   } else {
+  //     throw Exception('Failed to fetch quote');
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
