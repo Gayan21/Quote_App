@@ -59,33 +59,60 @@ class _QuotesListScreenState extends State<QuotesListScreen> {
             child: Text(
               'Quotes',
               style: TextStyle(
-                fontSize: 20,
+                fontSize: 24,
                 fontWeight: FontWeight.bold,
+                color: Colors.blue,
               ),
             ),
           ),
           Expanded(
-            child: Center(
-              child: FutureBuilder<List<Quote>>(
-                future: quotes,
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    return ListView.builder(
-                      itemCount: snapshot.data!.length,
-                      itemBuilder: (context, index) {
-                        final quote = snapshot.data![index];
-                        return ListTile(
-                          title: Text(quote.content),
-                          subtitle: Text('- ${quote.author}'),
-                        );
-                      },
-                    );
-                  } else if (snapshot.hasError) {
-                    return Text('Error: ${snapshot.error}');
-                  }
-                  return CircularProgressIndicator();
-                },
-              ),
+            child: FutureBuilder<List<Quote>>(
+              future: quotes,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return ListView.builder(
+                    itemCount: snapshot.data!.length,
+                    itemBuilder: (context, index) {
+                      final quote = snapshot.data![index];
+                      return Card(
+                        elevation: 4,
+                        margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                        color: Colors.grey[200],
+                        child: ListTile(
+                          title: Text(
+                            quote.content,
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
+                          ),
+                          subtitle: Text(
+                            '- ${quote.author}',
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.grey[700],
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                } else if (snapshot.hasError) {
+                  return Center(
+                    child: Text(
+                      'Error: ${snapshot.error}',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.red,
+                      ),
+                    ),
+                  );
+                }
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              },
             ),
           ),
         ],
@@ -93,5 +120,8 @@ class _QuotesListScreenState extends State<QuotesListScreen> {
     );
   }
 }
+
+
+
 
 
